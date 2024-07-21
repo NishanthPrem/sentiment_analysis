@@ -2,7 +2,6 @@
 
 import pandas as pd
 import re
-import nltk
 # Install if necessary - nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
@@ -25,6 +24,8 @@ for i in range(len(df)):
     ps = PorterStemmer()
     all_stopwords = stopwords.words('english')
     all_stopwords.remove('not')
+    all_stopwords.remove("didn't")
+    all_stopwords.remove("isn't")
     review = [ps.stem(word) for word in review if not word in set(all_stopwords)]
     review = ' '.join(review)
     corpus.append(review)
@@ -37,7 +38,7 @@ y = df.iloc[:, -1].values
 
 #%% Splitting the dataset
 
-x_train, x_test, y_train, y_true = train_test_split(x, y, test_size=0.2)
+x_train, x_test, y_train, y_true = train_test_split(x, y, test_size=0.2, random_state = 0)
 
 #%% Naive Bayes Classifier
 
